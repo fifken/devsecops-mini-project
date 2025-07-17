@@ -1,0 +1,36 @@
+name: DevSecOps Mini Project CI
+
+on:
+  push:
+    branches:
+      - main # Jalankan workflow saat ada push ke branch main
+  pull_request:
+    branches:
+      - main # Jalankan workflow saat ada Pull Request ke branch main
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Sesuaikan jika Anda menggunakan versi Node.js lain
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Unit Tests
+        run: npm test
+
+      - name: Run NPM Audit (Dependency Scan)
+        run: npm audit --audit-level=high --json || true # Gunakan --json || true untuk mencegah gagalnya pipeline pada warning. Kita akan melihat warning di log.
+
+      - name: Run Gitleaks Scan (Secrets Detection)
+        uses: zricethezav/gitleaks-action@v1.6.0 # Menggunakan action yang sudah ada
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Diperlukan oleh Gitleaks action untuk autentikasi
