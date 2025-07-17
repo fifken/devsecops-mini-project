@@ -31,8 +31,8 @@ jobs:
         run: npm audit --audit-level=high --json || true # Gunakan --json || true untuk mencegah gagalnya pipeline pada warning. Kita akan melihat warning di log.
 
       - name: Run Gitleaks Scan (Secrets Detection)
-        uses: zricethezav/gitleaks-action@v1.6.0
+        uses: zricethezav/gitleaks-action@v2 # Ubah dari v1.6.0 ke v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          config-path: .gitleaks.toml # Tambahkan baris ini
+          config-path: .gitleaks.toml
