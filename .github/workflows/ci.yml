@@ -34,5 +34,3 @@ jobs:
         uses: zricethezav/gitleaks-action@v2 # Ubah dari v1.6.0 ke v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          config-path: .gitleaks.toml
