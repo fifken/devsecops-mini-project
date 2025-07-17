@@ -1,0 +1,13 @@
+# .gitleaks.toml
+# https://gitleaks.io/docs/config/
+
+[[rules]]
+description = "Exclude node_modules directory"
+regex = '.*' # A broad regex, but we will limit it to paths
+path = '''node_modules''' # Regex for path to exclude
+tags = ["node_modules"] # Optional tag for better reporting
+
+[allowlist]
+paths = [
+  'node_modules/' # Directly ignore the directory
+]
